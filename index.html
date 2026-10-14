@@ -78,3 +78,44 @@ renderLessons();updateProgress();updateBookLink();
 })();
 </script>
 </body></html>
+<script>
+  (function () {
+    const SELAR_URL = "https://selar.com/breakfreenow";
+
+    function lockSelarSettings() {
+      // 1. Set the "Get the ebook on Selar" button to your actual Selar URL
+      document.querySelectorAll("a").forEach(function (link) {
+        if (link.textContent.trim() === "Get the ebook on Selar") {
+          link.href = SELAR_URL;
+          link.target = "_blank";
+          link.rel = "noopener noreferrer";
+        }
+      });
+
+      // 2. Hide the "Purchase links are not configured yet" warning box
+      document.querySelectorAll("div, p").forEach(function (el) {
+        if (
+          el.children.length === 0 &&
+          el.textContent.includes("Purchase links are not configured yet")
+        ) {
+          el.style.display = "none";
+        }
+      });
+
+      // 3. Hide the "Book checkout" setting in Settings & privacy
+      document.querySelectorAll("h3").forEach(function (heading) {
+        if (
+          heading.textContent.trim() === "Book checkout" &&
+          heading.parentElement
+        ) {
+          heading.parentElement.style.display = "none";
+        }
+      });
+    }
+
+    // Run immediately, on page load, and whenever a user switches tabs
+    lockSelarSettings();
+    document.addEventListener("DOMContentLoaded", lockSelarSettings);
+    document.addEventListener("click", lockSelarSettings);
+  })();
+</script>
